@@ -1,0 +1,22 @@
+// Design tokens — alinhados ao design BelezaRS
+export const T = {
+  cream:     '#fdf6f0',
+  white:     '#ffffff',
+  rose10:    '#fdf0ea',
+  rose20:    '#f5ddd0',
+  rose30:    '#e8b4a0',
+  terra:     '#c17f6b',
+  terraDark: '#a0604e',
+  brown:     '#7a4a3a',
+  ink:       '#2c1a14',
+  muted:     '#8a7068',
+  border:    '#f0ddd4',
+  borderMid: '#e2c5b8',
+  badge:     '#f7eae3',
+  green:     '#4caf86',
+  greenBg:   '#edf8f3',
+  red:       '#d0574d',
+  redBg:     '#fdf0ef',
+  yellow:    '#d4a042',
+  yellowBg:  '#fdf5e8',
+} as const;

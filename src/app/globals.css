@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  /* Cores da marca */
+  --color-cream:      #fdf6f0;
+  --color-rose-10:    #fdf0ea;
+  --color-rose-20:    #f5ddd0;
+  --color-rose-30:    #e8b4a0;
+  --color-terra:      #c17f6b;
+  --color-terra-dark: #a0604e;
+  --color-brown:      #7a4a3a;
+  --color-ink:        #2c1a14;
+  --color-muted:      #8a7068;
+  --color-bdr:        #f0ddd4;
+  --color-bdr-mid:    #e2c5b8;
+  --color-badge:      #f7eae3;
+  --color-success:    #4caf86;
+  --color-success-bg: #edf8f3;
+  --color-danger:     #d0574d;
+  --color-danger-bg:  #fdf0ef;
+  --color-warning:    #d4a042;
+  --color-warning-bg: #fdf5e8;
+
+  /* Tipografia */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans:  'DM Sans', system-ui, sans-serif;
+}
+
+/* ── Animações ─────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.animate-fade-up { animation: fadeUp 0.7s ease both; }
+.animate-float   { animation: float 5s ease-in-out infinite; }
+.delay-1 { animation-delay: 0.12s; }
+.delay-2 { animation-delay: 0.24s; }
+.delay-3 { animation-delay: 0.36s; }
+.delay-4 { animation-delay: 0.48s; }
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c17f6b55; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #c17f6b88; }
+
+/* ── Base ───────────────────────────────────────────────────── */
+html, body { height: 100%; }
+body {
+  font-family: var(--font-sans);
+  background: #fdf6f0;
+  color: #2c1a14;
+  -webkit-font-smoothing: antialiased;
+}

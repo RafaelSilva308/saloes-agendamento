@@ -1,0 +1,356 @@
+// Prisma Schema — SaaS Agendamento para Salões de Estética
+// Modelo: Multitenant B2B2C com isolamento por salonId
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
+
+enum UserRole {
+  SUPER_ADMIN   // Dono da plataforma SaaS
+  SALON_OWNER   // Dono do salão
+  SALON_STAFF   // Funcionário/profissional
+  CLIENT        // Cliente final
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  TRIALING
+  PAST_DUE
+  CANCELLED
+}
+
+enum SubscriptionPlan {
+  STARTER   // Até 2 profissionais
+  GROWTH    // Até 5 profissionais
+  PRO       // Ilimitado
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+// ─────────────────────────────────────────────
+// USER — Todos os usuários da plataforma
+// ─────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  phone         String?
+  role          UserRole  @default(CLIENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relações NextAuth
+  accounts      Account[]
+  sessions      Session[]
+
+  // Salão que o usuário administra (SALON_OWNER)
+  ownedSalon    Salon?    @relation("SalonOwner")
+
+  // Salão onde trabalha (SALON_STAFF)
+  salonId       String?
+  salon         Salon?    @relation("SalonStaff", fields: [salonId], references: [id])
+
+  // Agendamentos feitos como cliente
+  appointments  Appointment[] @relation("ClientAppointments")
+
+  @@index([email])
+  @@index([salonId])
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+// SALON — Entidade central do multitenant
+// ─────────────────────────────────────────────
+
+model Salon {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique  // ex: "studio-ana-lima" → /studio-ana-lima
+  description String?
+  phone       String?
+  email       String?
+  address     String?
+  city        String?
+  state       String?
+  logoUrl     String?
+  coverUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Dono do salão (FK → User)
+  ownerId     String   @unique
+  owner       User     @relation("SalonOwner", fields: [ownerId], references: [id])
+
+  // Funcionários do salão
+  staff       User[]   @relation("SalonStaff")
+
+  // Dados do salão
+  services        Service[]
+  professionals   Professional[]
+  appointments    Appointment[]
+  workingHours    WorkingHours[]
+  subscription    Subscription?
+
+  @@index([slug])
+  @@index([ownerId])
+  @@map("salons")
+}
+
+// ─────────────────────────────────────────────
+// SERVICE — Serviços oferecidos pelo salão
+// ─────────────────────────────────────────────
+
+model Service {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  durationMin  Int      // Duração em minutos
+  price        Decimal  @db.Decimal(10, 2)
+  imageUrl     String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Multitenant: cada serviço pertence a um salão
+  salonId      String
+  salon        Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+
+  // Quais profissionais executam este serviço
+  professionals ProfessionalService[]
+
+  // Agendamentos deste serviço
+  appointments  Appointment[]
+
+  @@index([salonId])
+  @@map("services")
+}
+
+// ─────────────────────────────────────────────
+// PROFESSIONAL — Profissionais do salão
+// ─────────────────────────────────────────────
+
+model Professional {
+  id          String   @id @default(cuid())
+  name        String
+  bio         String?
+  avatarUrl   String?
+  specialty   String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Multitenant
+  salonId     String
+  salon       Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+
+  // Usuário vinculado (opcional — pode ser um profissional externo)
+  userId      String?  @unique
+  // user        User?    @relation(fields: [userId], references: [id])
+
+  // Serviços que este profissional executa
+  services    ProfessionalService[]
+
+  // Horários de disponibilidade do profissional
+  availability ProfessionalAvailability[]
+
+  // Agendamentos
+  appointments Appointment[]
+
+  @@index([salonId])
+  @@map("professionals")
+}
+
+// ─────────────────────────────────────────────
+// PROFESSIONAL_SERVICE — Tabela de junção
+// ─────────────────────────────────────────────
+
+model ProfessionalService {
+  professionalId String
+  serviceId      String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  service        Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([professionalId, serviceId])
+  @@map("professional_services")
+}
+
+// ─────────────────────────────────────────────
+// WORKING_HOURS — Horário de funcionamento do salão
+// ─────────────────────────────────────────────
+
+model WorkingHours {
+  id        String    @id @default(cuid())
+  dayOfWeek DayOfWeek
+  openTime  String    // "09:00"
+  closeTime String    // "19:00"
+  isOpen    Boolean   @default(true)
+
+  salonId   String
+  salon     Salon     @relation(fields: [salonId], references: [id], onDelete: Cascade)
+
+  @@unique([salonId, dayOfWeek])
+  @@index([salonId])
+  @@map("working_hours")
+}
+
+// ─────────────────────────────────────────────
+// PROFESSIONAL_AVAILABILITY — Disponibilidade por profissional
+// ─────────────────────────────────────────────
+
+model ProfessionalAvailability {
+  id             String    @id @default(cuid())
+  dayOfWeek      DayOfWeek
+  startTime      String    // "09:00"
+  endTime        String    // "18:00"
+  isAvailable    Boolean   @default(true)
+
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+
+  @@unique([professionalId, dayOfWeek])
+  @@index([professionalId])
+  @@map("professional_availability")
+}
+
+// ─────────────────────────────────────────────
+// APPOINTMENT — Agendamentos (coração do sistema)
+// ─────────────────────────────────────────────
+
+model Appointment {
+  id             String            @id @default(cuid())
+  date           DateTime          // Data + hora de início (UTC)
+  endTime        DateTime          // Calculado: date + service.durationMin
+  status         AppointmentStatus @default(PENDING)
+  notes          String?           // Observações da cliente
+  totalPrice     Decimal           @db.Decimal(10, 2)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  // Multitenant — permite queries eficientes por salão
+  salonId        String
+  salon          Salon             @relation(fields: [salonId], references: [id], onDelete: Cascade)
+
+  // Cliente (pode ser usuário registrado ou guest)
+  clientId       String?
+  client         User?             @relation("ClientAppointments", fields: [clientId], references: [id])
+  clientName     String            // Armazenado para caso guest
+  clientEmail    String
+  clientPhone    String?
+
+  // Serviço e profissional
+  serviceId      String
+  service        Service           @relation(fields: [serviceId], references: [id])
+
+  professionalId String
+  professional   Professional      @relation(fields: [professionalId], references: [id])
+
+  @@index([salonId])
+  @@index([salonId, date])           // Query principal do calendário
+  @@index([professionalId, date])    // Verificação de conflito de horário
+  @@index([clientEmail])
+  @@map("appointments")
+}
+
+// ─────────────────────────────────────────────
+// SUBSCRIPTION — Assinatura do salão no SaaS
+// ─────────────────────────────────────────────
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  plan                 SubscriptionPlan   @default(STARTER)
+  status               SubscriptionStatus @default(TRIALING)
+  trialEndsAt          DateTime?
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean            @default(false)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  // Stripe IDs
+  stripeCustomerId       String?  @unique
+  stripeSubscriptionId   String?  @unique
+  stripePriceId          String?
+
+  // Multitenant — 1 assinatura por salão
+  salonId              String   @unique
+  salon                Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+
+  @@index([stripeSubscriptionId])
+  @@map("subscriptions")
+}
+
+// ─────────────────────────────────────────────
+// NEXTAUTH — Tabelas obrigatórias do Auth.js v5
+// ─────────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
