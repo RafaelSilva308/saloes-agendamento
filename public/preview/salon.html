@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Studio Éclat — BelezaRS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+/* ── Salon page ─────────────────────────────── */
+.salon-layout { background:#f8f4f1; min-height:100vh; }
+
+/* Cover */
+.salon-cover { height:clamp(160px,28vw,240px); position:relative; }
+.salon-cover-img { height:100%; background:repeating-linear-gradient(135deg,var(--rose-10) 0,var(--rose-10) 14px,var(--rose-20) 14px,var(--rose-20) 28px); display:flex; align-items:center; justify-content:center; color:var(--terra); font-size:12px; font-family:monospace; opacity:.9; letter-spacing:1px; }
+.salon-cover-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(44,26,20,.25) 0%,transparent 45%,rgba(44,26,20,.45) 100%); }
+.cover-back { position:absolute; top:14px; left:16px; display:flex; gap:10px; }
+.cover-back a { background:rgba(255,255,255,.2); backdrop-filter:blur(8px); color:#fff; padding:7px 14px; border-radius:18px; font-size:13px; text-decoration:none; transition:background .2s; }
+.cover-back a:hover { background:rgba(255,255,255,.35); }
+.cover-actions { position:absolute; top:14px; right:16px; display:flex; gap:8px; }
+.cover-actions button { background:rgba(255,255,255,.2); backdrop-filter:blur(8px); color:#fff; border:none; border-radius:18px; padding:7px 14px; font-size:13px; cursor:pointer; font-family:var(--font-sans); transition:background .2s; }
+.cover-actions button:hover { background:rgba(255,255,255,.35); }
+
+/* Info strip */
+.salon-info-strip { background:var(--white); border-bottom:1px solid var(--border); padding:12px clamp(16px,4vw,40px); display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; position:sticky; top:0; z-index:20; box-shadow:0 2px 8px rgba(44,26,20,.05); }
+.salon-info-left { display:flex; align-items:center; gap:14px; }
+.salon-logo { width:52px; height:52px; border-radius:14px; background:var(--rose-10); border:2px solid var(--border); overflow:hidden; flex-shrink:0; }
+.salon-name { font-family:var(--font-serif); font-size:clamp(17px,3vw,22px); font-weight:700; color:var(--ink); }
+.salon-meta { display:flex; align-items:center; gap:8px; margin-top:2px; flex-wrap:wrap; }
+.salon-meta span { font-size:12px; color:var(--muted); }
+.salon-amenities { display:flex; gap:7px; flex-wrap:wrap; }
+.amenity-chip { background:var(--rose-10); color:var(--terra); font-size:11px; font-weight:500; padding:4px 10px; border-radius:16px; border:1px solid var(--border); white-space:nowrap; }
+
+/* Content */
+.salon-content { display:grid; grid-template-columns:1fr 300px; gap:0; align-items:start; max-width:1200px; margin:0 auto; }
+.salon-left { padding:24px clamp(16px,4vw,40px) 48px; }
+.salon-right { border-left:1px solid var(--border); background:var(--white); padding:24px; min-height:500px; position:sticky; top:72px; max-height:calc(100vh - 72px); overflow-y:auto; }
+
+/* Professional picker */
+.prof-label { font-size:11px; color:var(--muted); font-weight:600; letter-spacing:.5px; text-transform:uppercase; margin-bottom:12px; }
+.prof-scroll { display:flex; gap:14px; overflow-x:auto; padding-bottom:4px; margin-bottom:22px; }
+.prof-scroll::-webkit-scrollbar { height:3px; }
+.prof-item { display:flex; flex-direction:column; align-items:center; gap:7px; cursor:pointer; flex-shrink:0; }
+.prof-avatar { width:54px; height:54px; border-radius:50%; border:2.5px solid var(--border); overflow:hidden; transition:border-color .2s; }
+.prof-avatar.selected { border-color:var(--terra); }
+.prof-avatar-img { height:100%; background:repeating-linear-gradient(135deg,var(--rose-10) 0,var(--rose-10) 8px,var(--rose-20) 8px,var(--rose-20) 16px); }
+.prof-name { font-size:11px; color:var(--muted); font-weight:400; text-align:center; max-width:64px; transition:color .2s; }
+.prof-name.selected { color:var(--terra); font-weight:600; }
+
+/* Tabs */
+.tabs { display:flex; background:var(--white); border-radius:12px; padding:4px; border:1px solid var(--border); width:fit-content; margin-bottom:22px; gap:2px; flex-wrap:wrap; }
+.tab-btn { background:transparent; color:var(--muted); border:none; border-radius:9px; padding:8px 16px; font-size:13px; font-weight:500; cursor:pointer; font-family:var(--font-sans); transition:all .2s; white-space:nowrap; }
+.tab-btn.active { background:var(--terra); color:#fff; font-weight:600; }
+
+/* Service list */
+.service-cat-label { font-size:10px; color:var(--terra); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin:16px 0 8px; }
+.service-row { background:var(--white); border-radius:14px; border:1px solid var(--border); padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; transition:box-shadow .2s; }
+.service-row:hover { box-shadow:var(--shadow-sm); }
+.service-info {}
+.service-name { font-size:14px; font-weight:600; color:var(--ink); display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:4px; }
+.service-price { font-size:13px; color:var(--terra); font-weight:600; }
+.service-time { font-size:12px; color:var(--muted); margin-left:10px; }
+.service-add-btn { background:transparent; color:var(--terra); border:1.5px solid var(--terra); border-radius:18px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap; transition:all .2s; font-family:var(--font-sans); }
+.service-add-btn:hover { background:var(--terra); color:#fff; }
+
+/* Reviews tab */
+.review-card { background:var(--white); border-radius:14px; border:1px solid var(--border); padding:16px 18px; margin-bottom:12px; }
+.review-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.review-user { display:flex; align-items:center; gap:10px; }
+.review-user-avatar { width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--rose-30),var(--terra)); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; flex-shrink:0; }
+.review-user-name { font-size:13px; font-weight:600; color:var(--ink); }
+.review-user-stars { font-size:11px; color:var(--terra); }
+.review-date { font-size:12px; color:var(--muted); }
+.review-text { font-size:13px; color:var(--muted); line-height:1.6; }
+
+/* Sidebar sections */
+.sidebar-section { margin-bottom:22px; padding-bottom:22px; border-bottom:1px solid var(--border); }
+.sidebar-section:last-child { border-bottom:none; margin-bottom:0; }
+.sidebar-section-title { font-size:11px; font-weight:700; color:var(--ink); letter-spacing:.3px; text-transform:uppercase; margin-bottom:12px; }
+.hours-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border); }
+.hours-row:last-child { border-bottom:none; }
+.hours-day { font-size:12px; color:var(--ink); font-weight:500; }
+.hours-time { font-size:12px; color:var(--muted); }
+.hours-time.closed { color:var(--red); }
+.payment-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.payment-chip { background:var(--badge); color:var(--terra); font-size:11px; font-weight:600; padding:5px 11px; border-radius:18px; }
+.contact-row { display:flex; justify-content:space-between; align-items:center; padding:7px 0; }
+.contact-row span { font-size:13px; color:var(--muted); }
+.contact-row a { font-size:11px; color:var(--terra); font-weight:500; cursor:pointer; }
+.map-placeholder { height:110px; border-radius:12px; }
+.map-addr { font-size:11px; color:var(--muted); margin-top:7px; line-height:1.6; }
+
+/* Mobile sidebar toggle */
+.mobile-sidebar-btn { display:none; position:fixed; bottom:20px; right:16px; background:var(--terra); color:#fff; border:none; border-radius:50%; width:52px; height:52px; font-size:22px; cursor:pointer; box-shadow:0 8px 24px rgba(193,127,107,.4); z-index:30; }
+.mobile-sidebar-drawer { display:none; position:fixed; inset:0; z-index:40; }
+.mobile-sidebar-backdrop { position:absolute; inset:0; background:rgba(44,26,20,.5); }
+.mobile-sidebar-panel { position:absolute; right:0; top:0; bottom:0; width:min(320px,90vw); background:var(--white); overflow-y:auto; padding:20px; box-shadow:-8px 0 32px rgba(44,26,20,.12); }
+.mobile-sidebar-drawer.open { display:block; }
+
+@media (max-width: 860px) {
+  .salon-content { grid-template-columns:1fr; }
+  .salon-right { display:none; }
+  .salon-amenities { display:none; }
+  .mobile-sidebar-btn { display:flex; align-items:center; justify-content:center; }
+}
+@media (max-width: 540px) {
+  .salon-info-strip { flex-direction:column; align-items:flex-start; }
+  .cover-actions .btn-primary { padding:7px 14px; font-size:12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="salon-layout">
+  <!-- COVER -->
+  <div class="salon-cover">
+    <div class="salon-cover-img">capa panorâmica — Studio Éclat</div>
+    <div class="salon-cover-overlay"></div>
+    <div class="cover-back">
+      <a href="index.html">← Voltar</a>
+    </div>
+    <div class="cover-actions">
+      <button id="favBtn" onclick="toggleFav()">♡ Favoritar</button>
+      <button class="btn-primary" style="background:var(--terra)">Agendar agora</button>
+    </div>
+  </div>
+
+  <!-- INFO STRIP -->
+  <div class="salon-info-strip">
+    <div class="salon-info-left">
+      <div class="salon-logo"><div class="salon-cover-img" style="height:52px;font-size:9px">logo</div></div>
+      <div>
+        <div class="salon-name">Studio Éclat</div>
+        <div class="salon-meta">
+          <span style="color:var(--terra)">★ 4.9</span>
+          <span>212 avaliações</span>
+          <span>· 320m</span>
+          <span style="color:var(--green);font-weight:500">· Aberto agora</span>
+        </div>
+      </div>
+    </div>
+    <div class="salon-amenities">
+      <span class="amenity-chip">Wi-Fi</span>
+      <span class="amenity-chip">Estacionamento</span>
+      <span class="amenity-chip">Acessível</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="salon-content">
+    <!-- LEFT -->
+    <div class="salon-left">
+      <!-- Profissionais -->
+      <div class="prof-label">Escolha a profissional</div>
+      <div class="prof-scroll">
+        <div class="prof-item" onclick="selectProf(this)">
+          <div class="prof-avatar selected"><div class="prof-avatar-img"></div></div>
+          <span class="prof-name selected">Qualquer</span>
+        </div>
+        <div class="prof-item" onclick="selectProf(this)">
+          <div class="prof-avatar"><div class="prof-avatar-img"></div></div>
+          <span class="prof-name">Isabela</span>
+        </div>
+        <div class="prof-item" onclick="selectProf(this)">
+          <div class="prof-avatar"><div class="prof-avatar-img"></div></div>
+          <span class="prof-name">Camila</span>
+        </div>
+        <div class="prof-item" onclick="selectProf(this)">
+          <div class="prof-avatar"><div class="prof-avatar-img"></div></div>
+          <span class="prof-name">Fernanda</span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(this,'servicos')">Serviços</button>
+        <button class="tab-btn" onclick="switchTab(this,'profissionais')">Profissionais</button>
+        <button class="tab-btn" onclick="switchTab(this,'avaliacoes')">Avaliações</button>
+      </div>
+
+      <!-- Serviços -->
+      <div id="tab-servicos">
+        <div class="service-cat-label">Cabelo</div>
+        <div class="service-row"><div class="service-info"><div class="service-name">Corte + Finalização <span class="badge">Mais pedido</span></div><div><span class="service-price">R$ 95</span><span class="service-time">⏱ 60 min</span></div></div><button class="service-add-btn">+ Adicionar</button></div>
+        <div class="service-row"><div class="service-info"><div class="service-name">Hidratação Express</div><div><span class="service-price">R$ 80</span><span class="service-time">⏱ 45 min</span></div></div><button class="service-add-btn">+ Adicionar</button></div>
+        <div class="service-cat-label">Coloração</div>
+        <div class="service-row"><div class="service-info"><div class="service-name">Coloração Completa</div><div><span class="service-price">R$ 260</span><span class="service-time">⏱ 150 min</span></div></div><button class="service-add-btn">+ Adicionar</button></div>
+        <div class="service-row"><div class="service-info"><div class="service-name">Balayage</div><div><span class="service-price">A partir de R$ 350</span><span class="service-time">⏱ 240 min</span></div></div><button class="service-add-btn">+ Adicionar</button></div>
+        <div class="service-cat-label">Sobrancelha</div>
+        <div class="service-row"><div class="service-info"><div class="service-name">Sobrancelha Design <span class="badge">Tendência</span></div><div><span class="service-price">R$ 55</span><span class="service-time">⏱ 40 min</span></div></div><button class="service-add-btn">+ Adicionar</button></div>
+        <div class="service-cat-label">Maquiagem</div>
+        <div class="service-row"><div class="service-info"><div class="service-name">Maquiagem Profissional</div><div><span class="service-price">R$ 140</span><span class="service-time">⏱ 60 min</span></div></div><button class="service-add-btn">+ Adicionar</button></div>
+      </div>
+
+      <!-- Profissionais tab -->
+      <div id="tab-profissionais" style="display:none">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+          <div style="background:var(--white);border-radius:14px;border:1px solid var(--border);padding:18px;text-align:center">
+            <div style="width:60px;height:60px;border-radius:50%;overflow:hidden;margin:0 auto 10px;border:2px solid var(--border)"><div class="salon-cover-img" style="height:60px;font-size:9px"></div></div>
+            <div style="font-family:var(--font-serif);font-size:14px;font-weight:600;color:var(--ink)">Isabela Costa</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">Cabeleireira</div>
+            <button class="btn-primary" style="width:100%;padding:8px;font-size:12px;border-radius:18px;margin-top:12px">Selecionar</button>
+          </div>
+          <div style="background:var(--white);border-radius:14px;border:1px solid var(--border);padding:18px;text-align:center">
+            <div style="width:60px;height:60px;border-radius:50%;overflow:hidden;margin:0 auto 10px;border:2px solid var(--border)"><div class="salon-cover-img" style="height:60px;font-size:9px"></div></div>
+            <div style="font-family:var(--font-serif);font-size:14px;font-weight:600;color:var(--ink)">Camila Rocha</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">Colorista</div>
+            <button class="btn-primary" style="width:100%;padding:8px;font-size:12px;border-radius:18px;margin-top:12px">Selecionar</button>
+          </div>
+          <div style="background:var(--white);border-radius:14px;border:1px solid var(--border);padding:18px;text-align:center">
+            <div style="width:60px;height:60px;border-radius:50%;overflow:hidden;margin:0 auto 10px;border:2px solid var(--border)"><div class="salon-cover-img" style="height:60px;font-size:9px"></div></div>
+            <div style="font-family:var(--font-serif);font-size:14px;font-weight:600;color:var(--ink)">Fernanda Luz</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">Design de Sobrancelha</div>
+            <button class="btn-primary" style="width:100%;padding:8px;font-size:12px;border-radius:18px;margin-top:12px">Selecionar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Avaliações tab -->
+      <div id="tab-avaliacoes" style="display:none">
+        <div class="review-card"><div class="review-card-header"><div class="review-user"><div class="review-user-avatar">M</div><div><div class="review-user-name">Mariana S.</div><div class="review-user-stars">★★★★★</div></div></div><span class="review-date">15 abr</span></div><p class="review-text">Amei o resultado do corte! Isabela é incrível, super atenciosa e o ambiente do salão é lindo.</p></div>
+        <div class="review-card"><div class="review-card-header"><div class="review-user"><div class="review-user-avatar">F</div><div><div class="review-user-name">Fernanda L.</div><div class="review-user-stars">★★★★★</div></div></div><span class="review-date">12 abr</span></div><p class="review-text">Coloração ficou perfeita. Já é minha 3ª vez aqui e sempre saio satisfeita.</p></div>
+        <div class="review-card"><div class="review-card-header"><div class="review-user"><div class="review-user-avatar">G</div><div><div class="review-user-name">Gabriela T.</div><div class="review-user-stars">★★★★☆</div></div></div><span class="review-date">8 abr</span></div><p class="review-text">Ótimo atendimento. Só acho que poderia ter mais horários disponíveis aos sábados.</p></div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="salon-right">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Horários</div>
+        <div class="hours-row"><span class="hours-day">Seg–Sex</span><span class="hours-time">09:00 – 20:00</span></div>
+        <div class="hours-row"><span class="hours-day">Sábado</span><span class="hours-time">09:00 – 18:00</span></div>
+        <div class="hours-row"><span class="hours-day">Domingo</span><span class="hours-time closed">Fechado</span></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Formas de pagamento</div>
+        <div class="payment-chips">
+          <span class="payment-chip">Dinheiro</span>
+          <span class="payment-chip">Cartão</span>
+          <span class="payment-chip">PIX</span>
+          <span class="payment-chip">Vale</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Contato</div>
+        <div class="contact-row"><span>📞 (11) 94567-8901</span><a>Copiar</a></div>
+        <div class="contact-row"><span>💬 WhatsApp</span><a>Abrir</a></div>
+        <div class="contact-row"><span>📸 @studioeclat</span><a>Seguir</a></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Localização</div>
+        <div class="map-placeholder img-placeholder">mapa</div>
+        <p class="map-addr">Rua Oscar Freire, 123<br>Jardins — São Paulo/SP</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Mobile sidebar button -->
+<button class="mobile-sidebar-btn" onclick="openMobileSidebar()">ℹ</button>
+<div class="mobile-sidebar-drawer" id="mobileSidebar">
+  <div class="mobile-sidebar-backdrop" onclick="closeMobileSidebar()"></div>
+  <div class="mobile-sidebar-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <span style="font-size:15px;font-weight:700;color:var(--ink)">Informações</span>
+      <button onclick="closeMobileSidebar()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer">✕</button>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Horários</div><div class="hours-row"><span class="hours-day">Seg–Sex</span><span class="hours-time">09:00 – 20:00</span></div><div class="hours-row"><span class="hours-day">Sábado</span><span class="hours-time">09:00 – 18:00</span></div><div class="hours-row"><span class="hours-day">Domingo</span><span class="hours-time closed">Fechado</span></div></div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Pagamento</div><div class="payment-chips"><span class="payment-chip">Dinheiro</span><span class="payment-chip">Cartão</span><span class="payment-chip">PIX</span><span class="payment-chip">Vale</span></div></div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Contato</div><div class="contact-row"><span>📞 (11) 94567-8901</span><a>Copiar</a></div><div class="contact-row"><span>💬 WhatsApp</span><a>Abrir</a></div></div>
+    <div><div class="sidebar-section-title">Localização</div><div class="map-placeholder img-placeholder">mapa</div><p class="map-addr">Rua Oscar Freire, 123 — Jardins, SP</p></div>
+  </div>
+</div>
+
+<script>
+function selectProf(el) {
+  document.querySelectorAll('.prof-avatar').forEach(a => a.classList.remove('selected'));
+  document.querySelectorAll('.prof-name').forEach(n => n.classList.remove('selected'));
+  el.querySelector('.prof-avatar').classList.add('selected');
+  el.querySelector('.prof-name').classList.add('selected');
+}
+function switchTab(btn, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['servicos','profissionais','avaliacoes'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t === id ? '' : 'none';
+  });
+}
+function toggleFav() {
+  const btn = document.getElementById('favBtn');
+  btn.textContent = btn.textContent.includes('♡') ? '♥ Favoritado' : '♡ Favoritar';
+}
+function openMobileSidebar() { document.getElementById('mobileSidebar').classList.add('open'); }
+function closeMobileSidebar() { document.getElementById('mobileSidebar').classList.remove('open'); }
+</script>
+</body>
+</html>
