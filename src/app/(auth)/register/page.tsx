@@ -208,13 +208,7 @@ export default function RegisterPage() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "0 16px",
-            }}
-          >
+          <div className="rx-register-grid">
             {field("name", "Seu nome", "text", "Ex: Isabela Costa")}
             {field("salonName", "Nome do salão", "text", "Ex: Studio Éclat")}
           </div>
@@ -222,13 +216,7 @@ export default function RegisterPage() {
           {field("email", "E-mail profissional", "email", "contato@meusalao.com")}
           {field("phone", "Telefone / WhatsApp", "tel", "(51) 9 9999-9999")}
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "0 16px",
-            }}
-          >
+          <div className="rx-register-grid">
             {field("password", "Senha", "password", "Mínimo 6 caracteres")}
             {field("confirmPassword", "Confirmar senha", "password", "Repita a senha")}
           </div>

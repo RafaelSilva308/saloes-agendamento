@@ -196,33 +196,20 @@ export default function DashboardHome() {
         }}
       >
         <div>
-          <span
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: 20,
-              fontWeight: 700,
-              color: T.ink,
-            }}
-          >
+          <span style={{ fontFamily: "var(--font-serif)", fontSize: 20, fontWeight: 700, color: T.ink }}>
             Bom dia, <em style={{ color: T.terra }}>Isabela</em> ✦
           </span>
-          <span style={{ fontSize: 13, color: T.muted, marginLeft: 16 }}>
+          <span className="rx-desktop-block" style={{ fontSize: 13, color: T.muted, marginLeft: 16 }}>
             Quinta-feira, 23 de abril de 2026
           </span>
         </div>
 
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          {/* Busca */}
-          <div
+          {/* Busca — desktop only */}
+          <div className="rx-tablet-up"
             style={{
-              background: T.rose10,
-              borderRadius: 24,
-              border: `1px solid ${T.border}`,
-              padding: "8px 16px",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              cursor: "pointer",
+              background: T.rose10, borderRadius: 24, border: `1px solid ${T.border}`,
+              padding: "8px 16px", alignItems: "center", gap: 8, cursor: "pointer",
             }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={T.terra} strokeWidth="2">
@@ -355,15 +342,15 @@ export default function DashboardHome() {
       </header>
 
       {/* CONTEÚDO PRINCIPAL */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "24px 32px 32px" }}>
+      <div className="rx-dash-scroll" style={{ flex: 1, overflowY: "auto", padding: "24px clamp(1rem,3vw,2rem) 32px" }}>
 
         {/* KPIs */}
-        <div style={{ display: "flex", gap: 16, marginBottom: 24 }}>
+        <div className="rx-kpi-row">
           {kpis.map((k, i) => <KPICard key={i} {...k} />)}
         </div>
 
         {/* GRID PRINCIPAL */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 20, alignItems: "start" }}>
+        <div className="rx-dashboard-main">
 
           {/* COLUNA ESQUERDA */}
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -419,7 +406,7 @@ export default function DashboardHome() {
             </div>
 
             {/* RECEITA + SERVIÇOS */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+            <div className="rx-grid-2">
 
               {/* GRÁFICO DE RECEITA */}
               <div

@@ -43,15 +43,11 @@ export default function LoginPage() {
         fontFamily: "var(--font-sans)",
       }}
     >
-      {/* PAINEL ESQUERDO — decorativo */}
+      {/* PAINEL ESQUERDO — decorativo (hidden on mobile) */}
       <div
+        className="rx-auth-left"
         style={{
-          flex: 1,
           background: `linear-gradient(135deg,${T.brown} 0%,#5a3028 100%)`,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
           padding: "60px",
           position: "relative",
           overflow: "hidden",
@@ -176,17 +172,7 @@ export default function LoginPage() {
       </div>
 
       {/* PAINEL DIREITO — formulário */}
-      <div
-        style={{
-          width: 480,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "60px 48px",
-          background: T.white,
-        }}
-      >
+      <div className="rx-auth-right" style={{ background: T.white }}>
         <div style={{ width: "100%", maxWidth: 360 }}>
           <div style={{ marginBottom: 40 }}>
             <h1

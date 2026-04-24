@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import Sidebar from "@/components/dashboard/Sidebar";
+import Sidebar, { BottomNav } from "@/components/dashboard/Sidebar";
 
 export const metadata = {
   title: "Dashboard — BelezaRS",
@@ -42,6 +42,7 @@ export default async function DashboardLayout({
       <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
         {children}
       </div>
+      <BottomNav />
     </div>
   );
 }

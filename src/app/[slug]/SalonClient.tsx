@@ -201,16 +201,7 @@ export default function SalonClient({ slug }: { slug: string }) {
         </div>
 
         {/* FAIXA DE INFO DO SALÃO */}
-        <div
-          style={{
-            background: "#fff",
-            borderBottom: `1px solid ${T.border}`,
-            padding: "14px 40px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className="rx-salon-info-bar">
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <div
               style={{
@@ -265,15 +256,9 @@ export default function SalonClient({ slug }: { slug: string }) {
       </div>
 
       {/* CONTEÚDO PRINCIPAL */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 320px",
-          alignItems: "start",
-        }}
-      >
+      <div className="rx-salon-layout">
         {/* ESQUERDA */}
-        <div style={{ padding: "28px 40px 48px" }}>
+        <div style={{ padding: "28px clamp(1rem,4vw,2.5rem) 48px" }}>
 
           {/* ESCOLHA A PROFISSIONAL */}
           <div style={{ marginBottom: 24 }}>
@@ -463,13 +448,7 @@ export default function SalonClient({ slug }: { slug: string }) {
 
           {/* PROFISSIONAIS */}
           {tab === "Profissionais" && (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3,1fr)",
-                gap: 16,
-              }}
-            >
+            <div className="rx-grid-3">
               {salon.professionals.slice(1).map((p) => (
                 <div
                   key={p.id}
@@ -583,21 +562,7 @@ export default function SalonClient({ slug }: { slug: string }) {
         </div>
 
         {/* SIDEBAR DIREITA */}
-        <div
-          style={{
-            borderLeft: `1px solid ${T.border}`,
-            padding: "28px 28px 48px",
-            display: "flex",
-            flexDirection: "column",
-            gap: 20,
-            minHeight: 600,
-            background: "#fff",
-            position: "sticky",
-            top: 284,
-            maxHeight: "calc(100vh - 284px)",
-            overflowY: "auto",
-          }}
-        >
+        <div className="rx-salon-sidebar-panel">
           {/* HORÁRIOS */}
           <div>
             <p

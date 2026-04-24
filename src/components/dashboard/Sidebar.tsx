@@ -78,17 +78,8 @@ export default function Sidebar({
 
   return (
     <aside
-      style={{
-        width: 230,
-        background: "#fff",
-        borderRight: `1px solid ${T.border}`,
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        flexShrink: 0,
-        position: "sticky",
-        top: 0,
-      }}
+      className="rx-sidebar-wrap"
+      style={{ background: "#fff", borderRight: `1px solid ${T.border}` }}
     >
       {/* Logo */}
       <div
@@ -263,5 +254,49 @@ export default function Sidebar({
         </svg>
       </div>
     </aside>
+  );
+}
+
+/* ── BOTTOM NAV (mobile) ─────────────────────────────────────── */
+export function BottomNav() {
+  const pathname = usePathname();
+  const bottomItems = navItems.slice(0, 5);
+
+  return (
+    <nav className="rx-bottom-nav">
+      {bottomItems.map((item) => {
+        const isActive =
+          item.href === "/dashboard"
+            ? pathname === "/dashboard"
+            : pathname.startsWith(item.href);
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 3,
+              padding: "4px 12px",
+              color: isActive ? T.terra : T.muted,
+              textDecoration: "none",
+              position: "relative",
+              minWidth: 44,
+              minHeight: 44,
+              justifyContent: "center",
+            }}
+          >
+            <span style={{ color: isActive ? T.terra : T.muted }}>{item.icon}</span>
+            <span style={{ fontSize: 9, fontWeight: isActive ? 600 : 400 }}>{item.label}</span>
+            {item.badge && (
+              <span style={{ position: "absolute", top: 2, right: 6, background: T.terra, color: "#fff", fontSize: 8, fontWeight: 700, width: 14, height: 14, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {item.badge}
+              </span>
+            )}
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
