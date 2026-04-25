@@ -120,90 +120,92 @@ function Hero() {
       <div style={{ position: "absolute", top: -120, right: -80, width: 600, height: 600, borderRadius: "50%", background: `radial-gradient(circle,${T.rose20} 0%,transparent 70%)`, opacity: 0.6, pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: -60, left: -100, width: 400, height: 400, borderRadius: "50%", background: `radial-gradient(circle,${T.rose30} 0%,transparent 70%)`, opacity: 0.3, pointerEvents: "none" }} />
 
-      {/* Esquerda */}
-      <div style={{ flex: 1, maxWidth: 620, position: "relative", zIndex: 1 }}>
-        <div className="animate-fade-up" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: T.badge, border: `1px solid ${T.border}`, borderRadius: 24, padding: "6px 16px", marginBottom: 28 }}>
-          <span style={{ width: 7, height: 7, borderRadius: "50%", background: T.terra, display: "inline-block" }} />
-          <span style={{ fontSize: 12, color: T.terra, fontWeight: 600, letterSpacing: 0.5 }}>+2.800 salões cadastrados no RS</span>
-        </div>
+      <div className="rx-hero-inner">
+        {/* Esquerda */}
+        <div style={{ flex: 1, maxWidth: 620, position: "relative", zIndex: 1 }}>
+          <div className="animate-fade-up" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: T.badge, border: `1px solid ${T.border}`, borderRadius: 24, padding: "6px 16px", marginBottom: 28 }}>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: T.terra, display: "inline-block" }} />
+            <span style={{ fontSize: 12, color: T.terra, fontWeight: 600, letterSpacing: 0.5 }}>+2.800 salões cadastrados no RS</span>
+          </div>
 
-        <h1 className="animate-fade-up delay-1 rx-h1" style={{ fontFamily: "var(--font-serif)", fontWeight: 700, color: T.ink, marginBottom: 24 }}>
-          Sua beleza,
-          <br />
-          <em style={{ color: T.terra }}>no seu tempo,</em>
-          <br />
-          do seu jeito.
-        </h1>
+          <h1 className="animate-fade-up delay-1 rx-h1" style={{ fontFamily: "var(--font-serif)", fontWeight: 700, color: T.ink, marginBottom: 24 }}>
+            Sua beleza,
+            <br />
+            <em style={{ color: T.terra }}>no seu tempo,</em>
+            <br />
+            do seu jeito.
+          </h1>
 
-        <p className="animate-fade-up delay-2" style={{ fontSize: 18, color: T.muted, lineHeight: 1.7, marginBottom: 40, maxWidth: 500 }}>
-          Agende serviços nos melhores salões femininos com poucos toques. Sem filas, sem ligações — só você e o seu momento.
-        </p>
+          <p className="animate-fade-up delay-2" style={{ fontSize: 18, color: T.muted, lineHeight: 1.7, marginBottom: 40, maxWidth: 500 }}>
+            Agende serviços nos melhores salões femininos com poucos toques. Sem filas, sem ligações — só você e o seu momento.
+          </p>
 
-        {/* Barra de busca */}
-        <div className="animate-fade-up delay-3" style={{ background: T.white, borderRadius: 40, border: `1.5px solid ${T.borderMid}`, display: "flex", alignItems: "center", padding: "10px 12px 10px 22px", boxShadow: "0 12px 40px rgba(193,127,107,.15)", marginBottom: 20, maxWidth: "100%" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={T.terra} strokeWidth="2" style={{ flexShrink: 0 }}>
-            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-          </svg>
-          <span style={{ flex: 1, padding: "0 14px", fontSize: 14.5, color: "#c4ada5" }}>Buscar salão ou serviço…</span>
-
-          {/* Location — hidden on small mobile */}
-          <div className="rx-search-loc">
-            <div style={{ width: 1, height: 22, background: T.border, marginRight: 14 }} />
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={T.terra} strokeWidth="2" style={{ marginRight: 8 }}>
-              <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7z" /><circle cx="12" cy="9" r="2.5" />
+          {/* Barra de busca */}
+          <div className="animate-fade-up delay-3" style={{ background: T.white, borderRadius: 40, border: `1.5px solid ${T.borderMid}`, display: "flex", alignItems: "center", padding: "10px 12px 10px 22px", boxShadow: "0 12px 40px rgba(193,127,107,.15)", marginBottom: 20, maxWidth: "100%" }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={T.terra} strokeWidth="2" style={{ flexShrink: 0 }}>
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
             </svg>
-            <span style={{ fontSize: 13, color: T.terra, fontWeight: 500, marginRight: 14 }}>Porto Alegre</span>
+            <span style={{ flex: 1, padding: "0 14px", fontSize: 14.5, color: "#c4ada5" }}>Buscar salão ou serviço…</span>
+
+            {/* Location — hidden on small mobile */}
+            <div className="rx-search-loc">
+              <div style={{ width: 1, height: 22, background: T.border, marginRight: 14 }} />
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={T.terra} strokeWidth="2" style={{ marginRight: 8 }}>
+                <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7z" /><circle cx="12" cy="9" r="2.5" />
+              </svg>
+              <span style={{ fontSize: 13, color: T.terra, fontWeight: 500, marginRight: 14 }}>Porto Alegre</span>
+            </div>
+
+            <button style={{ background: T.terra, color: "#fff", border: "none", borderRadius: 28, padding: "10px 20px", fontSize: 13.5, fontWeight: 600, cursor: "pointer", minHeight: 44, whiteSpace: "nowrap" }}>
+              Buscar
+            </button>
           </div>
 
-          <button style={{ background: T.terra, color: "#fff", border: "none", borderRadius: 28, padding: "10px 20px", fontSize: 13.5, fontWeight: 600, cursor: "pointer", minHeight: 44, whiteSpace: "nowrap" }}>
-            Buscar
-          </button>
-        </div>
-
-        {/* Estatísticas */}
-        <div className="animate-fade-up delay-4" style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
-          {[["14k+", "Agendamentos realizados"], ["2.8k", "Salões parceiros"], ["4.9★", "Avaliação média"]].map(([v, l], i) => (
-            <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
-              <span style={{ fontFamily: "var(--font-serif)", fontSize: 20, fontWeight: 700, color: T.ink }}>{v}</span>
-              <span style={{ fontSize: 12, color: T.muted }}>{l}</span>
-              {i < 2 && <span style={{ color: T.border, fontSize: 18, marginLeft: 8 }}>·</span>}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Direita — hero visual (desktop only) */}
-      <div className="animate-fade-up delay-2 rx-desktop-only" style={{ flex: 1, justifyContent: "center", alignItems: "center", position: "relative", paddingLeft: 60 }}>
-        <div className="animate-float" style={{ width: 360, background: T.white, borderRadius: 28, border: `1px solid ${T.border}`, boxShadow: "0 32px 80px rgba(44,26,20,.12)", overflow: "hidden" }}>
-          <ImgBox h={220} label="foto de destaque\ndo salão" radius={0} />
-          <div style={{ padding: "20px 22px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-              <div>
-                <p style={{ fontFamily: "var(--font-serif)", fontSize: 18, fontWeight: 700, color: T.ink }}>Studio Éclat</p>
-                <p style={{ fontSize: 12, color: T.muted, marginTop: 3 }}>Cabelo · Coloração · Skincare</p>
+          {/* Estatísticas */}
+          <div className="animate-fade-up delay-4" style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+            {[["14k+", "Agendamentos realizados"], ["2.8k", "Salões parceiros"], ["4.9★", "Avaliação média"]].map(([v, l], i) => (
+              <div key={i} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                <span style={{ fontFamily: "var(--font-serif)", fontSize: 20, fontWeight: 700, color: T.ink }}>{v}</span>
+                <span style={{ fontSize: 12, color: T.muted }}>{l}</span>
+                {i < 2 && <span style={{ color: T.border, fontSize: 18, marginLeft: 8 }}>·</span>}
               </div>
-              <span style={{ background: T.badge, color: T.terra, fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 20 }}>4.9 ★</span>
-            </div>
-            <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
-              <button style={{ flex: 1, background: T.terra, color: "#fff", border: "none", borderRadius: 24, padding: 11, fontSize: 13, fontWeight: 600, cursor: "pointer", minHeight: 44 }}>Agendar agora</button>
-              <button style={{ width: 44, height: 44, borderRadius: "50%", background: T.rose10, border: `1px solid ${T.border}`, cursor: "pointer", fontSize: 17 }}>♡</button>
-            </div>
+            ))}
           </div>
         </div>
 
-        <div style={{ position: "absolute", top: 30, right: 20, background: T.white, borderRadius: 16, padding: "10px 16px", border: `1px solid ${T.border}`, boxShadow: "0 8px 24px rgba(44,26,20,.1)", display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 32, height: 32, borderRadius: "50%", background: T.greenBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, color: T.green }}>✓</div>
-          <div>
-            <p style={{ fontSize: 12, fontWeight: 700, color: T.ink }}>Agendamento confirmado!</p>
-            <p style={{ fontSize: 11, color: T.muted }}>Hoje às 14:30 — Isabela Costa</p>
+        {/* Direita — hero visual (desktop only) */}
+        <div className="animate-fade-up delay-2 rx-desktop-only" style={{ flex: 1, justifyContent: "center", alignItems: "center", position: "relative", paddingLeft: 60 }}>
+          <div className="animate-float" style={{ width: 360, background: T.white, borderRadius: 28, border: `1px solid ${T.border}`, boxShadow: "0 32px 80px rgba(44,26,20,.12)", overflow: "hidden" }}>
+            <ImgBox h={220} label="foto de destaque\ndo salão" radius={0} />
+            <div style={{ padding: "20px 22px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div>
+                  <p style={{ fontFamily: "var(--font-serif)", fontSize: 18, fontWeight: 700, color: T.ink }}>Studio Éclat</p>
+                  <p style={{ fontSize: 12, color: T.muted, marginTop: 3 }}>Cabelo · Coloração · Skincare</p>
+                </div>
+                <span style={{ background: T.badge, color: T.terra, fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 20 }}>4.9 ★</span>
+              </div>
+              <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
+                <button style={{ flex: 1, background: T.terra, color: "#fff", border: "none", borderRadius: 24, padding: 11, fontSize: 13, fontWeight: 600, cursor: "pointer", minHeight: 44 }}>Agendar agora</button>
+                <button style={{ width: 44, height: 44, borderRadius: "50%", background: T.rose10, border: `1px solid ${T.border}`, cursor: "pointer", fontSize: 17 }}>♡</button>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div style={{ position: "absolute", bottom: 60, left: 20, background: T.white, borderRadius: 14, padding: "10px 16px", border: `1px solid ${T.border}`, boxShadow: "0 8px 24px rgba(44,26,20,.1)", display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ fontSize: 22 }}>⭐</div>
-          <div>
-            <p style={{ fontSize: 11, fontWeight: 700, color: T.ink }}>Fernanda L. avaliou</p>
-            <p style={{ fontSize: 10, color: T.muted }}>&quot;Experiência incrível!&quot;</p>
+          <div style={{ position: "absolute", top: 30, right: -20, background: T.white, borderRadius: 16, padding: "10px 16px", border: `1px solid ${T.border}`, boxShadow: "0 8px 24px rgba(44,26,20,.1)", display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ width: 32, height: 32, borderRadius: "50%", background: T.greenBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, color: T.green }}>✓</div>
+            <div>
+              <p style={{ fontSize: 12, fontWeight: 700, color: T.ink }}>Agendamento confirmado!</p>
+              <p style={{ fontSize: 11, color: T.muted }}>Hoje às 14:30 — Isabela Costa</p>
+            </div>
+          </div>
+
+          <div style={{ position: "absolute", bottom: 60, left: 10, background: T.white, borderRadius: 14, padding: "10px 16px", border: `1px solid ${T.border}`, boxShadow: "0 8px 24px rgba(44,26,20,.1)", display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ fontSize: 22 }}>⭐</div>
+            <div>
+              <p style={{ fontSize: 11, fontWeight: 700, color: T.ink }}>Fernanda L. avaliou</p>
+              <p style={{ fontSize: 10, color: T.muted }}>&quot;Experiência incrível!&quot;</p>
+            </div>
           </div>
         </div>
       </div>

@@ -66,6 +66,7 @@ img, video { max-width: 100%; height: auto; }
 .rx-desktop-only  { display: none !important; }
 .rx-desktop-block { display: none !important; }
 .rx-mobile-only   { display: flex !important; }
+.rx-tablet-up     { display: none !important; }
 
 @media (min-width: 768px)  {
   .rx-mobile-only  { display: none  !important; }
@@ -83,7 +84,13 @@ img, video { max-width: 100%; height: auto; }
   padding: 0 clamp(1rem, 5vw, 4.5rem);
   height: 68px; display: flex; align-items: center; justify-content: space-between;
 }
-.rx-tablet-up { display: none !important; }
+
+.rx-hero-inner {
+  display: flex; flex-direction: column; width: 100%; max-width: 1200px; margin: 0 auto; gap: 48px;
+}
+@media (min-width: 1024px) {
+  .rx-hero-inner { flex-direction: row; align-items: center; }
+}
 
 .rx-mobile-menu-overlay {
   position: fixed; inset: 0; z-index: 200;
