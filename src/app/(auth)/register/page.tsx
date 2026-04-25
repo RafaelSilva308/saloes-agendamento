@@ -294,6 +294,11 @@ export default function RegisterPage() {
             Entrar
           </Link>
         </p>
+        <p style={{ textAlign: "center", marginTop: 16, fontSize: 13, color: T.muted }}>
+          <Link href="/" style={{ color: T.terra, textDecoration: "none" }}>
+            ← Voltar para o início
+          </Link>
+        </p>
       </div>
     </div>
   );

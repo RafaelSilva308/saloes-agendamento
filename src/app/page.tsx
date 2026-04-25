@@ -46,13 +46,10 @@ function LandingNav() {
 
         {/* Desktop links */}
         <div className="rx-tablet-up" style={{ gap: 32, alignItems: "center" }}>
-          {["Como funciona", "Para salões", "Preços", "Blog"].map((l) => (
-            <a key={l} href="#"
-              style={{ color: T.muted, fontSize: 14, fontWeight: 500, textDecoration: "none", transition: "color .15s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = T.terra)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}
-            >{l}</a>
-          ))}
+          <a href="#como-funciona" style={{ color: T.muted, fontSize: 14, fontWeight: 500, textDecoration: "none", transition: "color .15s" }} onMouseEnter={(e) => (e.currentTarget.style.color = T.terra)} onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}>Como funciona</a>
+          <a href="#para-saloes" style={{ color: T.muted, fontSize: 14, fontWeight: 500, textDecoration: "none", transition: "color .15s" }} onMouseEnter={(e) => (e.currentTarget.style.color = T.terra)} onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}>Para salões</a>
+          <a href="#precos" style={{ color: T.muted, fontSize: 14, fontWeight: 500, textDecoration: "none", transition: "color .15s" }} onMouseEnter={(e) => (e.currentTarget.style.color = T.terra)} onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}>Preços</a>
+          <Link href="/dashboard" style={{ color: T.muted, fontSize: 14, fontWeight: 500, textDecoration: "none", transition: "color .15s" }} onMouseEnter={(e) => (e.currentTarget.style.color = T.terra)} onMouseLeave={(e) => (e.currentTarget.style.color = T.muted)}>Demo Dashboard</Link>
         </div>
 
         {/* Desktop CTAs */}
@@ -91,11 +88,10 @@ function LandingNav() {
           </span>
 
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, width: "100%" }}>
-            {["Como funciona", "Para salões", "Preços", "Blog"].map((l) => (
-              <a key={l} href="#" onClick={() => setMenuOpen(false)}
-                style={{ color: T.ink, fontSize: 20, fontWeight: 500, textDecoration: "none", padding: "6px 0" }}
-              >{l}</a>
-            ))}
+            <a href="#como-funciona" onClick={() => setMenuOpen(false)} style={{ color: T.ink, fontSize: 20, fontWeight: 500, textDecoration: "none", padding: "6px 0" }}>Como funciona</a>
+            <a href="#para-saloes" onClick={() => setMenuOpen(false)} style={{ color: T.ink, fontSize: 20, fontWeight: 500, textDecoration: "none", padding: "6px 0" }}>Para salões</a>
+            <a href="#precos" onClick={() => setMenuOpen(false)} style={{ color: T.ink, fontSize: 20, fontWeight: 500, textDecoration: "none", padding: "6px 0" }}>Preços</a>
+            <Link href="/dashboard" onClick={() => setMenuOpen(false)} style={{ color: T.ink, fontSize: 20, fontWeight: 500, textDecoration: "none", padding: "6px 0" }}>Demo Dashboard</Link>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", maxWidth: 300 }}>
@@ -216,7 +212,7 @@ function Hero() {
 /* ── COMO FUNCIONA ───────────────────────────────────────────── */
 function HowItWorks() {
   return (
-    <section className="rx-section" style={{ background: T.white }}>
+    <section id="como-funciona" className="rx-section" style={{ background: T.white }}>
       <div style={{ textAlign: "center", marginBottom: 64 }}>
         <p style={{ fontSize: 12, color: T.terra, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", marginBottom: 12 }}>Simples assim</p>
         <h2 className="rx-h2" style={{ fontFamily: "var(--font-serif)", fontWeight: 700, color: T.ink }}>
@@ -334,7 +330,7 @@ function Categories() {
 /* ── PARA SALÕES ─────────────────────────────────────────────── */
 function ForSalons() {
   return (
-    <section className="rx-section" style={{ background: `linear-gradient(135deg,${T.brown} 0%,#5a3028 100%)`, position: "relative", overflow: "hidden" }}>
+    <section id="para-saloes" className="rx-section" style={{ background: `linear-gradient(135deg,${T.brown} 0%,#5a3028 100%)`, position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", top: -100, right: -100, width: 500, height: 500, borderRadius: "50%", background: "rgba(255,255,255,.04)" }} />
       <div style={{ position: "absolute", bottom: -80, left: -60, width: 350, height: 350, borderRadius: "50%", background: "rgba(255,255,255,.03)" }} />
 
@@ -351,9 +347,9 @@ function ForSalons() {
             <Link href="/register" style={{ background: "#fff", color: T.brown, borderRadius: 32, padding: "14px 32px", fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44 }}>
               Cadastrar meu salão
             </Link>
-            <button style={{ background: "transparent", color: "rgba(255,255,255,.75)", border: "1.5px solid rgba(255,255,255,.3)", borderRadius: 32, padding: "14px 28px", fontSize: 15, fontWeight: 600, cursor: "pointer", minHeight: 44 }}>
+            <Link href="/dashboard" style={{ background: "transparent", color: "rgba(255,255,255,.75)", border: "1.5px solid rgba(255,255,255,.3)", borderRadius: 32, padding: "14px 28px", fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: 44 }}>
               Ver demonstração
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -477,7 +473,7 @@ function Pricing() {
   ];
 
   return (
-    <section className="rx-section" style={{ background: T.cream }}>
+    <section id="precos" className="rx-section" style={{ background: T.cream }}>
       <div style={{ textAlign: "center", marginBottom: 56 }}>
         <p style={{ fontSize: 12, color: T.terra, fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", marginBottom: 12 }}>Planos</p>
         <h2 className="rx-h2" style={{ fontFamily: "var(--font-serif)", fontWeight: 700, color: T.ink }}>
@@ -557,24 +553,33 @@ function LandingFooter() {
             A plataforma de agendamento de salões de beleza mais elegante do Rio Grande do Sul.
           </p>
         </div>
-        {[
-          { title: "Produto",     links: ["Como funciona","Preços","Aplicativo mobile","API para desenvolvedores"] },
-          { title: "Para salões", links: ["Cadastrar salão","Dashboard","Planos e preços","Central de ajuda"] },
-          { title: "Empresa",     links: ["Sobre nós","Blog","Carreiras","Contato"] },
-        ].map((col, i) => (
-          <div key={i}>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,.5)", letterSpacing: 1, textTransform: "uppercase", marginBottom: 16 }}>{col.title}</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {col.links.map((l) => (
-                <a key={l} href="#"
-                  style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none", transition: "color .15s" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,.65)")}
-                >{l}</a>
-              ))}
-            </div>
+        <div>
+          <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,.5)", letterSpacing: 1, textTransform: "uppercase", marginBottom: 16 }}>Produto</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <a href="#como-funciona" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Como funciona</a>
+            <a href="#precos" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Preços</a>
+            <a href="#" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Aplicativo mobile</a>
+            <a href="#" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>API</a>
           </div>
-        ))}
+        </div>
+        <div>
+          <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,.5)", letterSpacing: 1, textTransform: "uppercase", marginBottom: 16 }}>Para salões</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <Link href="/register" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Cadastrar salão</Link>
+            <Link href="/dashboard" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Dashboard</Link>
+            <a href="#precos" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Planos e preços</a>
+            <a href="#" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Central de ajuda</a>
+          </div>
+        </div>
+        <div>
+          <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,.5)", letterSpacing: 1, textTransform: "uppercase", marginBottom: 16 }}>Empresa</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <a href="#" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Sobre nós</a>
+            <a href="#" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Blog</a>
+            <a href="#" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Carreiras</a>
+            <a href="#" style={{ fontSize: 13.5, color: "rgba(255,255,255,.65)", textDecoration: "none" }}>Contato</a>
+          </div>
+        </div>
       </div>
       <div style={{ borderTop: "1px solid rgba(255,255,255,.12)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
         <p style={{ fontSize: 12 }}>© 2026 BelezaRS. Todos os direitos reservados.</p>
