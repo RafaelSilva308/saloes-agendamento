@@ -294,13 +294,13 @@ export default function RelatoriosPage() {
           </div>
 
           {/* No-Show Rate */}
-          <div style={{ background: T.white, borderRadius: 16, border: `1px solid ${T.dangerBg}`, padding: 20, boxShadow: "0 1px 3px rgba(0,0,0,0.02)" }}>
+          <div style={{ background: T.white, borderRadius: 16, border: `1px solid ${T.redBg}`, padding: 20, boxShadow: "0 1px 3px rgba(0,0,0,0.02)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-              <span style={{ fontSize: 13, color: T.danger, fontWeight: 600 }}>No-Show Rate</span>
-              <div style={{ width: 32, height: 32, borderRadius: 8, background: T.dangerBg, color: T.danger, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>⚠️</div>
+              <span style={{ fontSize: 13, color: T.red, fontWeight: 600 }}>No-Show Rate</span>
+              <div style={{ width: 32, height: 32, borderRadius: 8, background: T.redBg, color: T.red, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>⚠️</div>
             </div>
-            <div style={{ fontFamily: "var(--font-serif)", fontSize: 28, fontWeight: 700, color: T.danger }}>12.5%</div>
-            <div style={{ fontSize: 12, color: T.danger, fontWeight: 500, marginTop: 6 }}>
+            <div style={{ fontFamily: "var(--font-serif)", fontSize: 28, fontWeight: 700, color: T.red }}>12.5%</div>
+            <div style={{ fontSize: 12, color: T.red, fontWeight: 500, marginTop: 6 }}>
               Atenção: Acima da meta de 10%
             </div>
           </div>
